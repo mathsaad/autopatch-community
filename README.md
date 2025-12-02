@@ -1,89 +1,147 @@
 # AutoPatch Community
 
-Um sistema de autopatcher para Ragnarok Online com configuração embutida no EXE.
+<p align="center">
+  <img src="electron-builder/build/icon.png" alt="AutoPatch Logo" width="128" height="128">
+</p>
 
-## Arquitetura
+<p align="center">
+  <strong>Um sistema completo de autopatcher para Ragnarok Online</strong><br>
+  Builder visual moderno + Patcher nativo leve com configuração embutida no EXE
+</p>
 
-O projeto usa uma arquitetura híbrida:
+<p align="center">
+  <img src="https://img.shields.io/badge/Electron-38.x-47848F?logo=electron" alt="Electron">
+  <img src="https://img.shields.io/badge/Vue.js-3.5-4FC08D?logo=vue.js" alt="Vue.js">
+  <img src="https://img.shields.io/badge/C++-17-00599C?logo=cplusplus" alt="C++17">
+  <img src="https://img.shields.io/badge/Windows-7%2F8%2F10%2F11-0078D6?logo=windows" alt="Windows">
+</p>
 
-- **Builder** (C# WPF .NET 8): Interface visual rica para criar e configurar o patcher
-- **Patcher** (C++ Win32/GDI+): Executável nativo leve para os usuários finais
+---
 
-## Características
+## ✨ Características
 
-- 📦 Configuração embutida no EXE (sem INI/JSON externo)
-- 🎨 Interface customizável via imagem ou HTML/CSS/JS
-- 🔄 Suporte a formatos GRF/THOR para patches
-- 🛠️ Editor visual drag-and-drop para posicionar elementos
-- 🚀 Executável nativo pequeno (~500KB) sem dependências
-- 🖥️ Suporte a Windows 7/8/10/11
+- 🎨 **Builder Visual Moderno** - Interface drag-and-drop para criar patchers customizados
+- 📦 **Configuração Embutida** - Tudo no EXE, sem arquivos externos (INI/JSON)
+- 🖼️ **UI Customizável** - Imagem de fundo, botões, labels, WebViews e mais
+- 🔄 **Formatos de Patch** - Suporte a GRF, THOR, GPF e RGZ
+- 🚀 **Executável Leve** - ~700KB, sem dependências de DLL
+- 🪟 **Bordas Arredondadas** - Suporte a window border radius
+- 🌐 **WebView Integrado** - Exiba notícias/páginas web dentro do patcher
 
-## Estrutura do Projeto
+## 🏗️ Arquitetura
+
+O projeto usa uma arquitetura moderna:
+
+| Componente | Tecnologia | Descrição |
+|------------|------------|-----------|
+| **Builder** | Electron + Vue 3 + TypeScript | Interface visual para criar patchers |
+| **Patcher** | C++ Win32/GDI+ | Executável nativo para usuários finais |
+| **Embedder** | C++ | Embute configuração/recursos no EXE |
+
+## 📁 Estrutura do Projeto
 
 ```
-src/
-├── Builder/                 # Ferramenta visual (C# WPF)
-│   ├── Views/               # MainWindow, ExportWindow
-│   ├── Controls/            # ImageModeEditor, HtmlModeEditor
-│   ├── Models/              # PatcherProject, UIElements
-│   ├── Services/            # PatcherGenerator
-│   └── Themes/              # Dark theme resources
-
-cpp/
-├── src/
-│   ├── core/                # Biblioteca compartilhada
-│   │   ├── config.h/cpp     # Carregador de configuração
-│   │   ├── grf.h/cpp        # Parser GRF
-│   │   ├── thor.h/cpp       # Parser THOR
-│   │   ├── http.h/cpp       # Download HTTP
-│   │   ├── patcher.h/cpp    # Lógica de patching
-│   │   └── utils.h/cpp      # Utilitários
-│   ├── client/              # AutoPatcher.exe
-│   │   ├── main.cpp
-│   │   ├── window.h/cpp     # Janela principal
-│   │   ├── ui.h/cpp         # Renderização GDI+
-│   │   └── skin.h/cpp       # Sistema de skin
-│   └── builder/             # AutoPatchBuilder.exe (C++)
-└── CMakeLists.txt
+autopatch-community/
+├── electron-builder/           # 🎨 Builder Visual (Electron + Vue 3)
+│   ├── src/
+│   │   ├── main/               # Processo principal Electron
+│   │   ├── preload/            # Bridge IPC
+│   │   └── renderer/           # Interface Vue 3
+│   │       ├── components/
+│   │       │   └── editor/     # DesignCanvas, PropertyPanel, etc.
+│   │       ├── stores/         # Pinia stores (project, ui)
+│   │       └── types/          # TypeScript definitions
+│   ├── native/                 # Embedder nativo
+│   └── resources/              # Executáveis compilados
+│
+├── cpp/                        # ⚡ Patcher Nativo (C++)
+│   ├── src/
+│   │   ├── core/               # Biblioteca compartilhada
+│   │   │   ├── config.cpp/h    # Parser de configuração JSON
+│   │   │   ├── grf.cpp/h       # Parser GRF
+│   │   │   ├── thor.cpp/h      # Parser THOR  
+│   │   │   ├── http.cpp/h      # Download HTTP (WinInet)
+│   │   │   ├── patcher.cpp/h   # Lógica de patching
+│   │   │   └── resources.cpp/h # Extração de recursos RC
+│   │   ├── client/             # AutoPatcher.exe
+│   │   │   ├── window.cpp/h    # Janela principal Win32
+│   │   │   ├── ui.cpp/h        # Renderização GDI+
+│   │   │   └── embedded_browser.cpp/h  # WebView MSHTML
+│   │   └── builder/            # AutoPatchBuilder.exe
+│   │       └── embedder.cpp/h  # Embute recursos no EXE
+│   └── CMakeLists.txt
+│
+├── samples/                    # 📋 Arquivos de exemplo
+│   ├── patcher.json            # Config de exemplo
+│   └── webview_test.html       # Teste de WebView
+│
+└── doc/                        # 📚 Documentação
+    ├── GUIA_DE_USO.md
+    └── IMPLEMENTATION_PLAN.md
 ```
 
-## Como Usar
+## 🚀 Começando
 
-### Compilando o Builder (C#)
+### Pré-requisitos
+
+- **Node.js** 18+ (para o Builder)
+- **Visual Studio 2022** com "Desktop development with C++"
+- **CMake** 3.20+
+
+### Compilando o Builder (Electron)
 
 ```bash
-cd src/Builder
-dotnet build
+cd electron-builder
+npm install
+npm run dev          # Modo desenvolvimento
+npm run build:win    # Build para Windows
 ```
 
 ### Compilando o Patcher (C++)
 
-Requer Visual Studio 2022 com C++ Desktop Development.
-
 ```bash
-cd cpp/build
+cd cpp
+mkdir build && cd build
+cmake ..
 cmake --build . --config Release
 ```
 
+Os executáveis serão gerados em `cpp/build/bin/Release/`:
+- `AutoPatcher.exe` - Template do patcher
+- `AutoPatchBuilder.exe` - Ferramenta de build
+- `embedder.exe` - Embute recursos
+
 ### Usando o Builder
 
-1. Execute `AutoPatchBuilder.exe`
-2. Configure as URLs do servidor de patches
-3. Escolha o modo de interface (Imagem ou HTML)
-4. No modo Imagem:
-   - Selecione uma imagem de fundo
-   - Adicione botões, labels e barra de progresso
-   - Arraste para posicionar os elementos
-5. Clique em "Gerar Patcher EXE"
-6. O EXE gerado contém toda a configuração embutida
+1. Execute o Builder: `npm run dev` (ou o instalador)
+2. Configure as **Configurações Gerais**:
+   - URLs do servidor de patches
+   - Executável do jogo
+   - Dimensões da janela
+3. Adicione elementos no canvas:
+   - 🖼️ Imagem de fundo
+   - 🔘 Botões (com estados hover/pressed)
+   - 📝 Labels (texto dinâmico)
+   - 📊 Barra de progresso
+   - 🌐 WebView (páginas web)
+4. Clique em **"Gerar Patcher"**
+5. O EXE gerado contém tudo embutido!
 
-## Configuração do Servidor
+## ⚙️ Configuração do Servidor
 
-1. Configure um servidor HTTP para servir os arquivos de patch
-2. Crie o arquivo `patchlist.txt` com a lista de patches
-3. Coloque os arquivos `.thor` na pasta de patches
+### Estrutura de Arquivos
 
-### Formato do Patchlist
+```
+servidor/
+├── patchlist.txt      # Lista de patches
+├── version.json       # Versão atual (opcional)
+└── patches/
+    ├── patch001.thor
+    ├── patch002.thor
+    └── ...
+```
+
+### Formato do patchlist.txt
 
 ```
 # Comentários começam com #
@@ -93,43 +151,73 @@ cmake --build . --config Release
 3 patch003.thor
 ```
 
-## Ações dos Botões
+### version.json (opcional)
 
-Configure a propriedade "Action" dos botões:
+```json
+{
+  "version": 3,
+  "message": "Atualização disponível!"
+}
+```
 
-- `start_game` - Inicia o executável do jogo
-- `check_files` - Verifica arquivos e baixa patches
-- `settings` - Abre configurações (futuro)
-- `close` - Fecha o patcher
-- `minimize` - Minimiza a janela
-- `url:https://...` - Abre URL no navegador
+## 🎮 Ações dos Botões
 
+| Action | Descrição |
+|--------|-----------|
+| `start_game` | Inicia o executável do jogo |
+| `check_files` | Verifica e baixa patches |
+| `close` | Fecha o patcher |
+| `minimize` | Minimiza a janela |
+| `url:https://...` | Abre URL no navegador |
+
+## 📋 Formatos Suportados
+
+### GRF (Gravity Resource File)
 - Versões: 1.02, 1.03, 2.00, 3.00
 - Compressão: ZLIB
-- Criptografia: DES (v1.x apenas)
+- Criptografia: DES (v1.x)
+
+### THOR (Thor Patcher Format)
+- Formato otimizado para patches incrementais
+- Suporta remoção de arquivos
+- Compressão ZLIB
 
 ### GPF (Gravity Patch File)
-
 - Mesmo formato do GRF
-- Usado para patches incrementais
+- Usado para patches que modificam GRF existente
 
-### THOR
+### RGZ (Ragnarok GZip)
+- Arquivo GZIP com estrutura de diretórios
+- Extrai arquivos para pasta
 
-- Formato otimizado para patches
-- Suporta remoção de arquivos
-- Magic: "ASSF (C) 2007 Aeomin DEV"
+## 📸 Screenshots
 
-### RGZ
+<p align="center">
+  <i>Em breve...</i>
+</p>
 
-- Arquivo GZIP contendo estrutura de diretórios
-- Usado para patches que extraem para pasta
+## 🤝 Contribuindo
 
-## Licença
+Contribuições são bem-vindas! Por favor:
 
-MIT License - Veja LICENSE para detalhes.
+1. Faça um Fork do projeto
+2. Crie sua branch (`git checkout -b feature/MinhaFeature`)
+3. Commit suas mudanças (`git commit -m 'Add MinhaFeature'`)
+4. Push para a branch (`git push origin feature/MinhaFeature`)
+5. Abra um Pull Request
 
-## Créditos
+## 📄 Licença
 
-- **Cremané** (saadrcaa@gmail.com) - Contribuidor e mantenedor
-- Documentação GRF baseada em GRF Editor Internals
+Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+## 👏 Créditos
+
+- **Cremané** (saadrcaa@gmail.com) - Desenvolvedor e mantenedor
+- Documentação GRF baseada em [GRF Editor Internals](doc/GRF_EDITOR_INTERNALS.md)
 - Inspirado em Thor Patcher e rPatchur
+
+---
+
+<p align="center">
+  Feito com ❤️ para a comunidade de Ragnarok Online
+</p>
