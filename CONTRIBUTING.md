@@ -84,10 +84,9 @@ Use conventional commits:
 autoPatch Community/
 ├── cpp/                    # C++ core library
 │   ├── src/               # Source files
+│   │   ├── builder/       # Build system and utilities
 │   │   ├── client/        # Client components
-│   │   ├── grf/           # GRF handling
-│   │   ├── http/          # HTTP client
-│   │   └── patcher/       # Patching logic
+│   │   └── core/          # Core logic and functionality
 │   └── refs/              # Reference implementations
 ├── electron-builder/       # Electron + Vue builder app
 │   ├── src/
