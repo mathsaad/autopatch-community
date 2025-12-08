@@ -247,13 +247,16 @@ Para atualizar o vídeo sem gerar novo patcher:
 
 ## 🤝 Contribuindo
 
-Contribuições são bem-vindas! Por favor:
+Contribuições são bem-vindas! Este repositório requer **aprovação de Pull Request** antes de merge no `main`.
 
+Veja o guia completo em [CONTRIBUTING.md](CONTRIBUTING.md).
+
+**Resumo:**
 1. Faça um Fork do projeto
 2. Crie sua branch (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -m 'Add MinhaFeature'`)
+3. Commit suas mudanças (`git commit -m 'feat: Add MinhaFeature'`)
 4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
+5. Abra um Pull Request e aguarde aprovação
 
 ## 📄 Licença
 
@@ -264,6 +267,8 @@ Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para d
 - **Cremané** (saadrcaa@gmail.com) - Desenvolvedor e mantenedor
 - Documentação GRF baseada em [GRF Editor Internals](doc/GRF_EDITOR_INTERNALS.md)
 - Inspirado em Thor Patcher e rPatchur
+
+Veja todos os créditos e licenças de terceiros em [CREDITS.md](CREDITS.md).
 
 ---
 
