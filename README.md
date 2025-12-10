@@ -263,7 +263,7 @@ Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para d
 
 - **Cremané** (saadrcaa@gmail.com) - Desenvolvedor e mantenedor
 - Documentação GRF baseada em [GRF Editor Internals](doc/GRF_EDITOR_INTERNALS.md)
-- Inspirado em Thor Patcher e rPatchur
+- Inspirado em Eluair, Thor Patcher e rPatchur
 
 ---
 
