@@ -138,10 +138,9 @@ Os executáveis serão gerados em `cpp/build/bin/Release/`:
 servidor/
 ├── patchlist.txt      # Lista de patches
 ├── version.json       # Versão atual (opcional)
-└── patches/
-    ├── patch001.thor
-    ├── patch002.thor
-    └── ...
+├── patch001.thor
+├── patch002.thor
+└── ...
 ```
 
 ### Formato do patchlist.txt
